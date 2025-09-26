@@ -80,12 +80,13 @@ body {
     padding: 120px 2rem 80px;
     max-width: 1200px;
     margin: 0 auto;
+    text-align: left;
 }
 
 .hero-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
     align-items: center;
 }
 
@@ -130,6 +131,14 @@ body {
     border: 2px solid #e5e5e5;
     position: relative;
     overflow: hidden;
+}
+
+.profile-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e5e5e5;
 }
 
 .placeholder-pattern {
@@ -320,6 +329,11 @@ body {
     }
     
     .profile-placeholder {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .profile-image {
         width: 250px;
         height: 250px;
     }

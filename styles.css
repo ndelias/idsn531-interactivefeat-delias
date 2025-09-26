@@ -59,6 +59,11 @@ body {
     color: #007bff;
 }
 
+.nav-link.active {
+    color: #007bff;
+    font-weight: 500;
+}
+
 .cta-button {
     background-color: #000;
     color: white;
@@ -246,6 +251,152 @@ body {
     border: 1px solid #e6f3ff;
 }
 
+/* About Page Styles */
+.about-details {
+    padding: 80px 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-content {
+    max-width: 800px;
+}
+
+.about-text h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+    color: #333;
+}
+
+.about-text ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.about-text li {
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+/* Resume Page Styles */
+.resume-section {
+    padding: 120px 2rem 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.resume-content {
+    max-width: 800px;
+}
+
+.resume-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.resume-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.resume-title {
+    font-size: 1.3rem;
+    color: #007bff;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.resume-location {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.resume-section-content {
+    margin-bottom: 3rem;
+}
+
+.resume-section-content h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #333;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0.5rem;
+}
+
+.resume-item {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.resume-item:last-child {
+    border-bottom: none;
+}
+
+.resume-item h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.resume-dates {
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.resume-item ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.resume-item li {
+    margin-bottom: 0.3rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.skill-category h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.skill-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-category li {
+    margin-bottom: 0.3rem;
+    color: #666;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.skill-category li:before {
+    content: "•";
+    color: #007bff;
+    position: absolute;
+    left: 0;
+}
+
 /* Footer */
 .footer {
     background-color: #f8f8f8;
@@ -336,5 +487,13 @@ body {
     .profile-image {
         width: 250px;
         height: 250px;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .resume-header h1 {
+        font-size: 2rem;
     }
 }

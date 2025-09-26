@@ -316,6 +316,47 @@ body {
     color: #666;
 }
 
+.contact-info {
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.contact-info p {
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.contact-link {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.resume-company {
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 0.3rem;
+}
+
+.languages {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.languages h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
 .resume-section-content {
     margin-bottom: 3rem;
 }

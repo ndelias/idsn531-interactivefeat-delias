@@ -140,98 +140,132 @@
         </div>
     </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Form validation and submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Clear previous errors
-            clearErrors();
-            
-            // Get form data
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            let isValid = true;
-            
-            // Validate name
-            if (name === '') {
-                showError('nameError', 'Name is required');
-                isValid = false;
-            } else if (name.length < 2) {
-                showError('nameError', 'Name must be at least 2 characters');
-                isValid = false;
-            }
-            
-            // Validate email
-            if (email === '') {
-                showError('emailError', 'Email is required');
-                isValid = false;
-            } else if (!isValidEmail(email)) {
-                showError('emailError', 'Please enter a valid email address');
-                isValid = false;
-            }
-            
-            // Validate subject
-            if (subject === '') {
-                showError('subjectError', 'Subject is required');
-                isValid = false;
-            } else if (subject.length < 5) {
-                showError('subjectError', 'Subject must be at least 5 characters');
-                isValid = false;
-            }
-            
-            // Validate message
-            if (message === '') {
-                showError('messageError', 'Message is required');
-                isValid = false;
-            } else if (message.length < 10) {
-                showError('messageError', 'Message must be at least 10 characters');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Simulate form submission
-                alert('Thank you for your message! I\'ll get back to you soon.');
-                document.getElementById('contactForm').reset();
-            }
-        });
-        
-        function showError(elementId, message) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-        
-        function clearErrors() {
-            const errorElements = document.querySelectorAll('.error-message');
-            errorElements.forEach(element => {
-                element.textContent = '';
-                element.style.display = 'none';
+        // Enhanced jQuery form validation and submission
+        $(document).ready(function() {
+            // Form submission with jQuery
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Clear previous errors
+                $('.error-message').hide().text('');
+                
+                let isValid = true;
+                
+                // Validate name
+                const name = $('#name').val().trim();
+                if (name === '') {
+                    $('#nameError').text('Name is required').show();
+                    isValid = false;
+                } else if (name.length < 2) {
+                    $('#nameError').text('Name must be at least 2 characters').show();
+                    isValid = false;
+                }
+                
+                // Validate email
+                const email = $('#email').val().trim();
+                if (email === '') {
+                    $('#emailError').text('Email is required').show();
+                    isValid = false;
+                } else if (!isValidEmail(email)) {
+                    $('#emailError').text('Please enter a valid email address').show();
+                    isValid = false;
+                }
+                
+                // Validate subject
+                const subject = $('#subject').val().trim();
+                if (subject === '') {
+                    $('#subjectError').text('Subject is required').show();
+                    isValid = false;
+                } else if (subject.length < 5) {
+                    $('#subjectError').text('Subject must be at least 5 characters').show();
+                    isValid = false;
+                }
+                
+                // Validate message
+                const message = $('#message').val().trim();
+                if (message === '') {
+                    $('#messageError').text('Message is required').show();
+                    isValid = false;
+                } else if (message.length < 10) {
+                    $('#messageError').text('Message must be at least 10 characters').show();
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Simulate form submission with jQuery animation
+                    $('.form-submit').text('Sending...').prop('disabled', true);
+                    setTimeout(function() {
+                        alert('Thank you for your message! I\'ll get back to you soon.');
+                        $('#contactForm')[0].reset();
+                        $('.form-submit').text('Send Message').prop('disabled', false);
+                    }, 1000);
+                }
             });
-        }
+            
+            // Real-time validation with jQuery
+            $('#email').on('blur', function() {
+                const email = $(this).val().trim();
+                if (email !== '' && !isValidEmail(email)) {
+                    $('#emailError').text('Please enter a valid email address').show();
+                } else {
+                    $('#emailError').hide();
+                }
+            });
+            
+            // Add smooth focus effects
+            $('.form-input, .form-textarea, .form-select').on('focus', function() {
+                $(this).parent().addClass('focused');
+            }).on('blur', function() {
+                $(this).parent().removeClass('focused');
+            });
+
+            // Real-time validation for all fields
+            $('#name').on('input', function() {
+                const name = $(this).val().trim();
+                if (name.length > 0 && name.length < 2) {
+                    $('#nameError').text('Name must be at least 2 characters').show();
+                } else {
+                    $('#nameError').hide();
+                }
+            });
+
+            $('#subject').on('input', function() {
+                const subject = $(this).val().trim();
+                if (subject.length > 0 && subject.length < 5) {
+                    $('#subjectError').text('Subject must be at least 5 characters').show();
+                } else {
+                    $('#subjectError').hide();
+                }
+            });
+
+            $('#message').on('input', function() {
+                const message = $(this).val().trim();
+                if (message.length > 0 && message.length < 10) {
+                    $('#messageError').text('Message must be at least 10 characters').show();
+                } else {
+                    $('#messageError').hide();
+                }
+            });
+
+            // Character count for message
+            $('#message').on('input', function() {
+                const length = $(this).val().length;
+                const minLength = 10;
+                if (length > 0) {
+                    if (length < minLength) {
+                        $('#messageError').text(`Message must be at least ${minLength} characters (${length}/${minLength})`).show();
+                    } else {
+                        $('#messageError').hide();
+                    }
+                }
+            });
+        });
         
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
-        }
-        
-        // Real-time validation
-        document.getElementById('email').addEventListener('blur', function() {
-            const email = this.value.trim();
-            if (email !== '' && !isValidEmail(email)) {
-                showError('emailError', 'Please enter a valid email address');
-            } else {
-                clearError('emailError');
-            }
-        });
-        
-        function clearError(elementId) {
-            const errorElement = document.getElementById(elementId);
-            errorElement.textContent = '';
-            errorElement.style.display = 'none';
         }
     </script>
     <script src="script.js"></script>

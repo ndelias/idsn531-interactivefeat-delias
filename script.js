@@ -1,5 +1,5 @@
-// Interactive Bio Page JavaScript
-document.addEventListener('DOMContentLoaded', function() {
+// Interactive Bio Page JavaScript with jQuery
+$(document).ready(function() {
     
     // Scroll-triggered animations
     const observerOptions = {
@@ -109,8 +109,136 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add loading animation
-    window.addEventListener('load', function() {
-        document.body.classList.add('loaded');
+    $(window).on('load', function() {
+        $('body').addClass('loaded');
+    });
+
+    // Toggle project details with jQuery
+    $('.toggle-details-btn').on('click', function() {
+        const $button = $(this);
+        const $details = $($button.attr('aria-controls'));
+        const isExpanded = $button.attr('aria-expanded') === 'true';
+        
+        if (isExpanded) {
+            $details.slideUp(300);
+            $button.text('View Details').attr('aria-expanded', 'false');
+        } else {
+            $details.slideDown(300);
+            $button.text('Hide Details').attr('aria-expanded', 'true');
+        }
+    });
+
+    // Enhanced hover effects with jQuery
+    $('.project-card').hover(
+        function() {
+            $(this).find('.toggle-details-btn').addClass('hover-effect');
+        },
+        function() {
+            $(this).find('.toggle-details-btn').removeClass('hover-effect');
+        }
+    );
+
+    // Keyboard navigation for toggle buttons
+    $('.toggle-details-btn').on('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            $(this).click();
+        }
+    });
+
+    // Image Slider functionality
+    let currentSlide = 0;
+    const slides = $('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        slides.removeClass('active');
+        slides.eq(index).addClass('active');
+        $('.dot').removeClass('active');
+        $('.dot').eq(index).addClass('active');
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        const next = (currentSlide + 1) % totalSlides;
+        showSlide(next);
+    }
+
+    function prevSlide() {
+        const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlide(prev);
+    }
+
+    // Slider controls
+    $('#nextBtn').on('click', nextSlide);
+    $('#prevBtn').on('click', prevSlide);
+
+    // Dot navigation
+    $('.dot').on('click', function() {
+        const slideIndex = parseInt($(this).data('slide'));
+        showSlide(slideIndex);
+    });
+
+    // Keyboard navigation for slider
+    $(document).on('keydown', function(e) {
+        if ($('.slider-container').is(':visible')) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                nextSlide();
+            }
+        }
+    });
+
+    // Auto-play slider (optional - can be disabled)
+    // setInterval(nextSlide, 5000);
+
+    // Accessibility: Skip to main content
+    $('body').prepend('<a href="#main-content" class="skip-link">Skip to main content</a>');
+    
+    // Accessibility: Focus management for modals and dynamic content
+    $('.toggle-details-btn').on('click', function() {
+        const $details = $($(this).attr('aria-controls'));
+        if ($details.is(':visible')) {
+            // Focus on the details content when expanded
+            setTimeout(() => {
+                $details.focus();
+            }, 350);
+        }
+    });
+
+    // Accessibility: Announce dynamic content changes
+    function announceToScreenReader(message) {
+        const announcement = $('<div class="sr-only" aria-live="polite" aria-atomic="true">' + message + '</div>');
+        $('body').append(announcement);
+        setTimeout(() => {
+            announcement.remove();
+        }, 1000);
+    }
+
+    // Enhanced slider with screen reader announcements
+    function showSlideWithAnnouncement(index) {
+        showSlide(index);
+        const slideTitle = $('.slide').eq(index).find('h3').text();
+        announceToScreenReader('Now showing: ' + slideTitle);
+    }
+
+    // Update slider functions to include announcements
+    $('#nextBtn').off('click').on('click', function() {
+        const next = (currentSlide + 1) % totalSlides;
+        showSlideWithAnnouncement(next);
+    });
+
+    $('#prevBtn').off('click').on('click', function() {
+        const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+        showSlideWithAnnouncement(prev);
+    });
+
+    $('.dot').off('click').on('click', function() {
+        const slideIndex = parseInt($(this).data('slide'));
+        showSlideWithAnnouncement(slideIndex);
     });
 
 });

@@ -1341,6 +1341,32 @@ body {
     transform: translateY(0);
 }
 
+/* Cursor Trail */
+.cursor-trail {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(99,102,241,0.85) 0%, rgba(59,130,246,0.6) 60%, rgba(59,130,246,0) 100%);
+    filter: blur(0.5px);
+    border-radius: 40%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+    transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+    z-index: 999;
+}
+
+.cursor-trail.fade-out {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cursor-trail {
+        display: none !important;
+    }
+}
+
 /* ========================================
    RESPONSIVE DESIGN - MOBILE FIRST APPROACH
    ======================================== */

@@ -1,6 +1,9 @@
 // Interactive Bio Page JavaScript with jQuery
 $(document).ready(function() {
     
+    // Initialize interactive enhancements
+    initCursorTrail();
+    
     // Hamburger Menu Toggle Functionality
     const hamburgerMenu = $('.hamburger-menu');
     const navLinks = $('.nav-links');
@@ -289,6 +292,51 @@ $(document).ready(function() {
         const slideIndex = parseInt($(this).data('slide'));
         showSlideWithAnnouncement(slideIndex);
     });
+    
+    /**
+     * Cursor trail effect for visual flourish
+     */
+    function initCursorTrail() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prefersReducedMotion.matches) {
+            return;
+        }
+
+        let lastTrailTime = 0;
+        const trailInterval = 30; // milliseconds between trail elements
+
+        $(document).on('mousemove', function(event) {
+            const now = Date.now();
+            if (now - lastTrailTime < trailInterval) {
+                return;
+            }
+
+            lastTrailTime = now;
+
+            const $trail = $('<span class="cursor-trail" aria-hidden="true"></span>');
+            $trail.css({
+                left: `${event.clientX}px`,
+                top: `${event.clientY}px`
+            });
+
+            $('body').append($trail);
+
+            requestAnimationFrame(() => {
+                $trail.addClass('fade-out');
+            });
+
+            setTimeout(() => {
+                $trail.remove();
+            }, 600);
+        });
+
+        prefersReducedMotion.addEventListener('change', (event) => {
+            if (event.matches) {
+                $('.cursor-trail').remove();
+                $(document).off('mousemove');
+            }
+        });
+    }
 
 });
 

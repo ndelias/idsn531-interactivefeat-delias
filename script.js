@@ -1,51 +1,6 @@
 // Interactive Bio Page JavaScript with jQuery
 $(document).ready(function() {
     
-    // Create Pixelated "n" Logo
-    function createPixelLogo() {
-        const logoContainer = document.getElementById('pixelLogo');
-        if (!logoContainer) return;
-        
-        // Define the "n" shape as a 6x7 grid (1 = pixel on, 0 = pixel off)
-        // Creates a clearer, more recognizable lowercase "n" shape
-        const nShape = [
-            [1, 0, 0, 0, 0, 1],  // Row 1: left and right vertical lines
-            [1, 1, 0, 0, 0, 1],  // Row 2: left line, diagonal start, right line
-            [1, 0, 1, 0, 0, 1],  // Row 3: left line, diagonal middle, right line
-            [1, 0, 0, 1, 0, 1],  // Row 4: left line, diagonal continues, right line
-            [1, 0, 0, 0, 1, 1],  // Row 5: left line, diagonal end, right line
-            [1, 0, 0, 0, 0, 1],  // Row 6: left and right vertical lines
-            [1, 0, 0, 0, 0, 1]   // Row 7: left and right vertical lines
-        ];
-        
-        // Clear container
-        logoContainer.innerHTML = '';
-        
-        // Create pixels
-        nShape.forEach((row, rowIndex) => {
-            row.forEach((pixel, colIndex) => {
-                const pixelEl = document.createElement('div');
-                pixelEl.className = 'pixel';
-                
-                // Only add active class if pixel should be visible (forms the "n")
-                if (pixel === 1) {
-                    pixelEl.classList.add('active');
-                    // Add staggered animation delay based on position
-                    const delay = (rowIndex * 0.1) + (colIndex * 0.05);
-                    pixelEl.style.animationDelay = `${delay}s`;
-                } else {
-                    // Hide pixels that aren't part of the "n"
-                    pixelEl.style.display = 'none';
-                }
-                
-                logoContainer.appendChild(pixelEl);
-            });
-        });
-    }
-    
-    // Initialize logo on page load
-    createPixelLogo();
-    
     // Hamburger Menu Toggle Functionality
     const hamburgerMenu = $('.hamburger-menu');
     const navLinks = $('.nav-links');

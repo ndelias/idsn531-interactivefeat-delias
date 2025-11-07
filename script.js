@@ -1,6 +1,55 @@
 // Interactive Bio Page JavaScript with jQuery
 $(document).ready(function() {
     
+    // Hamburger Menu Toggle Functionality
+    const hamburgerMenu = $('.hamburger-menu');
+    const navLinks = $('.nav-links');
+    
+    hamburgerMenu.on('click', function() {
+        const isExpanded = $(this).attr('aria-expanded') === 'true';
+        
+        if (isExpanded) {
+            // Close menu
+            $(this).attr('aria-expanded', 'false');
+            navLinks.removeClass('menu-open');
+            $('body').css('overflow', ''); // Re-enable scrolling
+        } else {
+            // Open menu
+            $(this).attr('aria-expanded', 'true');
+            navLinks.addClass('menu-open');
+            $('body').css('overflow', 'hidden'); // Prevent background scrolling
+        }
+    });
+    
+    // Close menu when clicking on a nav link (mobile)
+    navLinks.find('.nav-link').on('click', function() {
+        if ($(window).width() <= 768) {
+            hamburgerMenu.attr('aria-expanded', 'false');
+            navLinks.removeClass('menu-open');
+            $('body').css('overflow', '');
+        }
+    });
+    
+    // Close menu when clicking outside (mobile)
+    $(document).on('click', function(e) {
+        if ($(window).width() <= 768) {
+            if (!$(e.target).closest('.nav').length && navLinks.hasClass('menu-open')) {
+                hamburgerMenu.attr('aria-expanded', 'false');
+                navLinks.removeClass('menu-open');
+                $('body').css('overflow', '');
+            }
+        }
+    });
+    
+    // Close menu on window resize if it's open and we're above mobile breakpoint
+    $(window).on('resize', function() {
+        if ($(window).width() > 768 && navLinks.hasClass('menu-open')) {
+            hamburgerMenu.attr('aria-expanded', 'false');
+            navLinks.removeClass('menu-open');
+            $('body').css('overflow', '');
+        }
+    });
+    
     // Scroll-triggered animations
     const observerOptions = {
         threshold: 0.1,

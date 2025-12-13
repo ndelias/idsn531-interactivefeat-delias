@@ -476,12 +476,24 @@ body {
 
 .project-image {
     width: 100%;
-    height: 200px;
+    height: 250px;
     background-color: #f8f8f8;
     border-radius: 6px;
     margin-bottom: 1rem;
     overflow: hidden;
     position: relative;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.project-image:hover img {
+    transform: scale(1.05);
 }
 
 .project-image .placeholder-pattern {
